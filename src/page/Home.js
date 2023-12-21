@@ -1,18 +1,28 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { useParams } from "next/navigation";
+
 
 export default function Home() {
   const [users, setUsers] = useState([]);
+
+  const { id } = useParams();
 
   useEffect(() => {
     loadUsers();
   }, []);
 
   const loadUsers = async () => {
-    const result = await axios.get("http://localhost:9191/users");
+    const result = await axios.get("http://localhost:8080/users");
     setUsers(result.data);
   };
+
+  const deleteUser = async (id) => {
+    await axios.delete(`http://localhost:8080/user/${id}`);
+    loadUsers();
+  };
+  
 
   return (
     <div className="container">
@@ -44,7 +54,9 @@ export default function Home() {
                   >
                     Edit
                   </Link>
-                  <button className="btn btn-danger mx-1">Delete</button>
+                  <button className="btn btn-danger mx-1"
+                  onClick={()=>deleteusre(user.userId)
+                  }>Delete</button>
                 </td>
               </tr>
             ))}
