@@ -14,12 +14,12 @@ export default function Home() {
   }, []);
 
   const loadUsers = async () => {
-    const result = await axios.get("http://localhost:8080/users");
+    const result = await axios.get("http://localhost:9191/users");
     setUsers(result.data);
   };
 
   const deleteUser = async (id) => {
-    await axios.delete(`http://localhost:8080/user/${id}`);
+    await axios.delete(`http://localhost:9191/user/${id}`);
     loadUsers();
   };
   
@@ -47,7 +47,12 @@ export default function Home() {
                 <td>{user.lastname}</td>
                 <td>{user.email}</td>
                 <td>
-                  <button className="btn btn-primary mx-1">View</button>
+                <Link
+                    className="btn btn-primary mx-2"
+                    to={`/viewuser/${user.id}`}
+                  >
+                    View
+                  </Link>
                   <Link
                     className="btn btn-outline-secondary mx-1"
                     to={`/edituser/${user.id}`}
@@ -55,7 +60,7 @@ export default function Home() {
                     Edit
                   </Link>
                   <button className="btn btn-danger mx-1"
-                  onClick={()=>deleteusre(user.userId)
+                  onClick={()=>deleteUser(user.id)
                   }>Delete</button>
                 </td>
               </tr>

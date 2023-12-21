@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useParams } from "next/navigation";
-import React, { useEffect } from "react";
+import React, {Link, useEffect } from "react";
 
 export default function ViewUser() {
   const [user, setUser] = setUser({
@@ -12,7 +12,7 @@ export default function ViewUser() {
   useEffect(() => {
     loadUsers();
   }, []);
-  const loadUser = async () => {
+  const loadUsers = async () => {
     const result = await axios.get(`http://localhost:9191/user/${id}`);
     setUser(result.data);
   };
@@ -24,7 +24,7 @@ export default function ViewUser() {
           <h2 className="text-center m-1"> User Details</h2>
           <div className="card">
             <div className="card-header">
-              Details of user id:
+              Details of user id: {user.id}
               <ul className="list-list-group-flush">
                 <li className="list-group-item">
                   <b>FirstName:</b>
@@ -41,9 +41,9 @@ export default function ViewUser() {
               </ul>
             </div>
           </div>
-          <link className="btn btn-primary my-2" to={"/"}>
+          <Link className="btn btn-primary my-2" to={"/"}>
             Back to Home
-          </link>
+          </Link>
         </div>
       </div>
     </div>
